@@ -274,7 +274,7 @@ object StringTheory extends Theory {
 
     private def findStringModel(goal : Goal) : Option[Map[Term, Word]] =
     modelCache(goal.facts) {
-      println("Running AFA-based consistency check")
+      // println("Running AFA-based consistency check")
       import TerForConvenience._
       implicit val _ = goal.order
 
@@ -424,7 +424,7 @@ object StringTheory extends Theory {
 
       if (withConcat) {
 
-      println("Using straight-line solver")
+      // println("Using straight-line solver")
 
       //////////////////////////////////////////////////////////////////////
       // Topological sorting to identify straightline formulas
@@ -670,8 +670,8 @@ object StringTheory extends Theory {
           throw new Exception("Formula is not straightline!")
       }
 
-      println("After splitting and topological sorting: " +
-              nodeSequence.size + " AFAs")
+      // println("After splitting and topological sorting: " +
+      //         nodeSequence.size + " AFAs")
 
 /*
       println
@@ -744,7 +744,7 @@ object StringTheory extends Theory {
       }
 
 //      println
-      println("After treeification: " + afaTrees.size + " trees")
+      // println("After treeification: " + afaTrees.size + " trees")
 
 //          for (t <- afaTrees) {
 //            println
@@ -772,29 +772,32 @@ object StringTheory extends Theory {
           (afas reduceLeft (AFA.conjoin(_, _)), terms.flatten)
         }
 
-        print("Final AFA has " + afa.states.size + " states ")
-//            println(afa)
+        // print("Final AFA has " + afa.states.size + " states ")
+        println("#START OF AFA")
+        println(afa)
+        println("#END OF AFA")
+        None
 //            println("over variables: " + terms)
 
-        FindAcceptedWords(afa) match {
-          case Some(words) => {
-            println(" ... is non-empty!")
-            val wordWords =
-              words map { w => (w map (Left(_))).toList }
-            Some(constructModel((terms zip wordWords).toMap))
-          }
-          case None => {
-            println(" ... is empty!")
-            None
-          }
-        }
+        // FindAcceptedWords(afa) match {
+        //   case Some(words) => {
+        //     println(" ... is non-empty!")
+        //     val wordWords =
+        //       words map { w => (w map (Left(_))).toList }
+        //     Some(constructModel((terms zip wordWords).toMap))
+        //   }
+        //   case None => {
+        //     println(" ... is empty!")
+        //     None
+        //   }
+        // }
       }
 
       //////////////////////////////////////////////////////////////////////
 
       } else {
 
-      println("Using tree-based solver")
+      // println("Using tree-based solver")
 
       //////////////////////////////////////////////////////////////////////
       val wordVariablesInConstraints = new LinkedHashSet[Term]
@@ -963,40 +966,43 @@ object StringTheory extends Theory {
       val model = new MHashMap[Term, Word]
 
       val satisfiable = constraintTrees forall { tree =>
-        println("Solving constraints:")
-        tree.prettyPrint
-        println
+        // println("Solving constraints:")
+        // tree.prettyPrint
+        // println
 
         val (afa, vars) = tree2AFA(tree)
-        print("Resulting AFA over variables " +
-              (vars mkString ", ") + " has " +
-              afa.states.size + " states ")
-//            println(afa)
+        // print("Resulting AFA over variables " +
+        //       (vars mkString ", ") + " has " +
+        //       afa.states.size + " states ")
+        println("#START OF AFA")
+        println(afa)
+        println("#END OF AFA")
+        false
 //            println("over variables: " + vars)
 
-        if(Flags.isSimpleModelChecker) {
-          if(SimpleModelChecker(afa)) {
-            println(" ... is non-empty!")
-            true
-          } else {
-            println(" ... is empty!")
-            false
-          }
-        } else {
-          FindAcceptedWords(afa) match {
-            case Some(words) => {
-              println(" ... is non-empty!")
-              val wordWords =
-                words map { w => (w map (Left(_))).toList }
-              model ++= vars zip wordWords
-              true
-            }
-            case None => {
-              println(" ... is empty!")
-              false
-            }
-          }
-        }
+        // if(Flags.isSimpleModelChecker) {
+        //   if(SimpleModelChecker(afa)) {
+        //     println(" ... is non-empty!")
+        //     true
+        //   } else {
+        //     println(" ... is empty!")
+        //     false
+        //   }
+        // } else {
+        //   FindAcceptedWords(afa) match {
+        //     case Some(words) => {
+        //       println(" ... is non-empty!")
+        //       val wordWords =
+        //         words map { w => (w map (Left(_))).toList }
+        //       model ++= vars zip wordWords
+        //       true
+        //     }
+        //     case None => {
+        //       println(" ... is empty!")
+        //       false
+        //     }
+        //   }
+        // }
       }
 
       if (satisfiable)

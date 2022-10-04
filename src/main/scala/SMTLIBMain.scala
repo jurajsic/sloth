@@ -90,7 +90,7 @@ object SMTLIBMain {
     ////////////////////////////////////////////////////////////////////////////
 
     val fileName = filenames.head
-    Console.err.println("Reading file " + fileName + " ...")
+    Console.err.println("#Reading file " + fileName + " ...")
 
     val reader = new SMTReader(fileName)
     val bitwidth = reader.bitwidth

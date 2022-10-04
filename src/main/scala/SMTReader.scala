@@ -69,7 +69,7 @@ class SMTReader(fileName: String) {
       }}
 
   val bitwidth = parser.observedBitwidth getOrElse 8
-  Console.err.println("Assuming bit-vectors of width " + bitwidth)
+  // Console.err.println("Assuming bit-vectors of width " + bitwidth)
 
   def elimEqv(aF : ap.parser.IFormula) : ap.parser.IFormula = {
     aF match {

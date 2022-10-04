@@ -277,7 +277,7 @@ class SMTLIBStringParser(_env : SMTLIBStringParser.Env,
     case PlainSymbol(n@"re.++") =>
       translateNAryFun(n, SMTLIBStringTheory.re_concat, args,
         (_.head))
-    case PlainSymbol(n@("re-of-seq" | "str.to.re")) =>
+    case PlainSymbol(n@("re-of-seq" | "str.to.re" | "str.to_re")) =>
       translateFun(n, SMTLIBStringTheory.re_of_seq, args,
         { case Seq(SMTSeq(t)) => SMTRegex(t) })
 
@@ -345,7 +345,7 @@ class SMTLIBStringParser(_env : SMTLIBStringParser.Env,
       translateFun(n, SMTLIBStringTheory.re_of_pred, args,
         { case Seq(SMTArray(List(t), SMTBool)) => SMTRegex(t) })
 
-    case PlainSymbol(n@("re-member" | "str.in.re")) =>
+    case PlainSymbol(n@("re-member" | "str.in.re" | "str.in_re")) =>
       translatePred(n, SMTLIBStringTheory.re_member, args)
 
     case PlainSymbol(n@("seq-replace-all" | "str.replaceall")) =>
