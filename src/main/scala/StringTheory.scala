@@ -774,7 +774,7 @@ object StringTheory extends Theory {
 
         // print("Final AFA has " + afa.states.size + " states ")
         println("#START OF AFA")
-        println(afa)
+        println(afa.eliminateParameters)
         println("#END OF AFA")
         None
 //            println("over variables: " + terms)
@@ -977,7 +977,7 @@ object StringTheory extends Theory {
         println("#START OF AFA")
         println(afa)
         println("#END OF AFA")
-        false
+        true
 //            println("over variables: " + vars)
 
         // if(Flags.isSimpleModelChecker) {
